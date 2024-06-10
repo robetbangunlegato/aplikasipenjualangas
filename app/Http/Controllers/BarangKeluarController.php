@@ -42,7 +42,9 @@ class BarangKeluarController extends Controller
     $validasiData = $request->validate([
         'barang_id' => 'required|string:max:255',
         'jenis_transaksi' => 'required',
-        'jumlah' => 'required|integer|min:1|lte:'. $stok_barang 
+        'jumlah' => 'required|integer|min:1|lte:'. $stok_barang,
+        'status' => 'required',
+        'user_id' => 'required'
     ]);
 
     if ($barang->jumlah < $validasiData['jumlah']) {

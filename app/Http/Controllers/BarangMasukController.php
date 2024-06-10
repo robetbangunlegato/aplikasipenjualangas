@@ -38,7 +38,9 @@ class BarangMasukController extends Controller
         $validasiData = $request->validate([
             'barang_id' => 'required|string|max:255',
             'jenis_transaksi' => 'required',
-            'jumlah' => 'required|integer|min:1'
+            'jumlah' => 'required|integer|min:1',
+            'status' => 'required',
+            'user_id' => 'required'
         ]);
 
         Transaksi::create($validasiData);

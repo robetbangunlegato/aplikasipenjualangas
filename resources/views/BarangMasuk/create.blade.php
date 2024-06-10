@@ -48,6 +48,8 @@
                                 class="material-icons">save</i></button>
                     </div>
                 </div>
+                <input type="text" value="selesai" name="status" hidden>
+                <input type="text" value="{{ Auth::user()->id }}" name="user_id" hidden>
             </form>
         </div>
         {{-- end body --}}
