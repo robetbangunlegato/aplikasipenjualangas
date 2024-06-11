@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Models\Barang;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PembelianController extends Controller
 {
@@ -31,6 +32,7 @@ class PembelianController extends Controller
     public function store(Request $request)
     {
         //
+        dd($request);
     }
 
     /**
@@ -39,6 +41,8 @@ class PembelianController extends Controller
     public function show(string $id)
     {
         //
+        $barang = Barang::find($id);
+        return view('Pembelian.show')->with('barang', $barang);
     }
 
     /**
