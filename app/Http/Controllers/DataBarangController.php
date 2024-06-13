@@ -78,14 +78,25 @@ class DataBarangController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        // dd($request);
         $validasiData = $request->validate([
             'nama' => 'required|string|max:255',
             'harga' => 'required|numeric|min:0',
-            'jumlah' => 'required|integer|min:0'
+            'jumlah' => 'nullable|integer|min:1',
+            'operator' => 'nullable',
+            'tujuan' => 'nullable'
         ]);
 
         // cari baris mana yang akan diupdate datanya
         $barangs = Barang::findOrFail($id);
+
+        if($validasiData['operator'] == '-'){
+            if($validasiData['tujuan'] == 'gas_terisi'){
+                $barangs -> jumlah -= $validasiData['jumlah'];
+                $barangs -> gas_terisi -= $validasiData['jumlah'];
+            } elseif($validasiData['tujuan'] == 'gas_kosong')
+        }
+
 
         // update data nya
         $barangs->nama = $request->input('nama');

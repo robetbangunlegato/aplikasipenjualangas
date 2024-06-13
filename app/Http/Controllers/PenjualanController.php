@@ -6,8 +6,9 @@ use App\Models\Barang;
 use App\Models\Pembeli;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
-class PembelianController extends Controller
+class PenjualanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +17,7 @@ class PembelianController extends Controller
     {
         //
         $barangs = Barang::all();
-        return view('Pembelian.index')->with('barangs', $barangs);
+        return view('Penjualan.index')->with('barangs', $barangs);
     }
 
     /**
@@ -33,7 +34,18 @@ class PembelianController extends Controller
     public function store(Request $request)
     {
         //
-        dd($request);
+        
+        $validasi = $request->validate([
+            'jumlah' => 'required',
+            'pembeli_id' => 'required',
+            'barang_id' => 'required',
+            'user_id' => 'required'
+        ]);
+
+        $barang = Barang::findOrFail($validasi['barang_id']);
+        $barang->gas_terisi -=$validasi['jumlah'];
+        $barang->gas_kosong += $validasi['jumlah'];
+        dd($validasi);
     }
 
     /**
@@ -44,7 +56,7 @@ class PembelianController extends Controller
         //
         $pembelis = Pembeli::all();
         $barang = Barang::find($id);
-        return view('Pembelian.show')->with('barang', $barang)->with('pembelis', $pembelis);
+        return view('Penjualan.show')->with('barang', $barang)->with('pembelis', $pembelis);
     }
 
     /**

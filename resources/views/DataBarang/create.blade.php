@@ -24,7 +24,7 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="input-group input-group-outline my-3">
-                            <label for="" class="form-label">Jumlah</label>
+                            <label for="" class="form-label">Jumlah saat ini</label>
                             <input type="number" class="form-control" name="jumlah" min="0">
                         </div>
                     </div>
