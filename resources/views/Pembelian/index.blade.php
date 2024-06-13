@@ -4,7 +4,6 @@
         <!-- Navbar -->
         <x-navbars.navs.auth titlePage="Pembelian"></x-navbars.navs.auth>
         <!-- End Navbar -->
-
         {{-- body --}}
         <div class="container-fluid py-4">
             <div class="row text-center">
@@ -13,9 +12,10 @@
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title">{{ $barang->nama }}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">Tersedia {{ $barang->jumlah }} barang</h6>
+                                <h6 class="card-subtitle mb-2 text-muted">Tersedia {{ $barang->jumlah }} unit</h6>
                                 <p class="card-text">Harga satuan {{ $barang->harga }}</p>
-                                <a href="{{ route('pembelian.show', $barang->id) }}" class="btn btn-primary">Pesan</a>
+                                <a href="{{ route('pembelian.show', $barang->id) }}" class="btn btn-primary">Buat
+                                    pesan</a>
                             </div>
                         </div>
                     </div>

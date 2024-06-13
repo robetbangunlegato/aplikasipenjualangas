@@ -48,7 +48,7 @@
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link text-white {{ Str::startsWith($activePage, 'barangmasuk.') ? ' active bg-gradient-primary' : '' }} "
                     href="{{ route('barangmasuk.index') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -56,8 +56,8 @@
                     </div>
                     <span class="nav-link-text ms-1">Barang Masuk</span>
                 </a>
-            </li>
-            <li class="nav-item">
+            </li> --}}
+            {{-- <li class="nav-item">
                 <a class="nav-link text-white {{ Str::startsWith($activePage, 'barangkeluar.') ? ' active bg-gradient-primary' : '' }} "
                     href="{{ route('barangkeluar.index') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -65,7 +65,7 @@
                     </div>
                     <span class="nav-link-text ms-1">Barang Keluar</span>
                 </a>
-            </li>
+            </li> --}}
             <li class="nav-item">
                 <a class="nav-link text-white {{ Str::startsWith($activePage, 'databarang.') ? ' active bg-gradient-primary' : '' }} "
                     href="{{ route('databarang.index') }}">
@@ -81,16 +81,16 @@
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">shopping_cart</i>
                     </div>
-                    <span class="nav-link-text ms-1">Pembelian</span>
+                    <span class="nav-link-text ms-1">Penjualan</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-white {{ $activePage == 'rtl' ? ' active bg-gradient-primary' : '' }}  "
-                    href="#">
+                <a class="nav-link text-white {{ Str::startsWith($activePage, 'datapembeli.') ? ' active bg-gradient-primary' : '' }}  "
+                    href="{{ route('datapembeli.index') }}">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">format_textdirection_r_to_l</i>
+                        <i class="material-icons opacity-10">group</i>
                     </div>
-                    <span class="nav-link-text ms-1">RTL</span>
+                    <span class="nav-link-text ms-1">Data Pembeli</span>
                 </a>
             </li>
             <li class="nav-item">

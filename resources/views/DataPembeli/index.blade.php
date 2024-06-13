@@ -1,8 +1,8 @@
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
-    <x-navbars.sidebar activePage='databarang.index'></x-navbars.sidebar>
+    <x-navbars.sidebar activePage='datapembeli.index'></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <x-navbars.navs.auth titlePage="Data Barang"></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage="Data Pembeli"></x-navbars.navs.auth>
         <!-- End Navbar -->
 
         {{-- body --}}
@@ -21,17 +21,8 @@
             {{-- tambah barang button --}}
             <div class="row">
                 <div class="col-3">
-                    <a href="{{ route('databarang.create') }}" class="btn btn-primary">Tambah Barang
+                    <a href="{{ route('datapembeli.create') }}" class="btn btn-primary">Tambah Data Pembeli
                         <i class="material-icons opacity-50">playlist_add</i></a>
-                </div>
-                <div class="col-4 offset-4 text-end p-0">
-                    <div class="input-group input-group-outline">
-                        <label class="form-label">cari berdasarkan nama barang...</label>
-                        <input type="text" id="searchInput" class="form-control" value="{{ $query ?? '' }}">
-                    </div>
-                </div>
-                <div class="col-1 p-1 text-center">
-                    <i class="material-icons" style="font-size: 30px">search</i>
                 </div>
             </div>
             {{-- end tambah barang button --}}
@@ -47,13 +38,10 @@
                                             No
                                         </th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            ID
+                                        </th>
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Nama
-                                        </th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Harga
-                                        </th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Jumlah
                                         </th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             Opsi
@@ -64,7 +52,7 @@
                                     @php
                                         $no = 1;
                                     @endphp
-                                    @forelse ($barangs as $barang)
+                                    @forelse ($pembelis as $pembeli)
                                         <tr>
                                             <td>
                                                 <p class="text-xs font-weight-normal mb-0">{{ $no }}</p>
@@ -73,24 +61,20 @@
                                                 @endphp
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-normal mb-0">{{ $barang->nama }}</p>
+                                                <p class="text-xs font-weight-normal mb-0">{{ $pembeli->id }}</p>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-normal mb-0">{{ $barang->harga }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-normal mb-0">{{ $barang->jumlah }}</p>
+                                                <p class="text-xs font-weight-normal mb-0">{{ $pembeli->nama }}</p>
                                             </td>
                                             </td>
-
                                             <td class="align-middle">
-                                                <a href="{{ route('databarang.edit', $barang->id) }}"
+                                                <a href="{{ route('datapembeli.edit', $pembeli->id) }}"
                                                     class="btn btn-warning">Edit
                                                     <i class="material-icons opacity-50">draw</i></a>
 
 
                                                 <button class="btn btn-danger btn-hapus"
-                                                    data-id-barang="{{ $barang->id }}" data-bs-toggle="modal"
+                                                    data-id-barang="{{ $pembeli->id }}" data-bs-toggle="modal"
                                                     data-bs-target="#HapusModal">Hapus
                                                     <i class="material-icons opacity-50">delete</i>
                                                 </button>
@@ -98,14 +82,13 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="5" class="text-xs font-weight-normal">
-                                                Barang tidak ditemukan.
+                                            <td colspan="4" class="text-xs font-weight-normal">
+                                                Tidak ada data.
                                             </td>
                                         </tr>
                                     @endforelse
                                 </tbody>
                             </table>
-                            {{ $barangs->links() }}
                         </div>
                     </div>
                 </div>
@@ -162,7 +145,7 @@
                 // mencari class button dengan nama 'btn-hapus dan menambahkan fungsi ketika tombol tersebut di klik'
                 $('.btn-hapus').click(function() {
                     let id = $(this).data('id-barang');
-                    $('#FormulirHapus').attr('action', '/databarang/' + id);
+                    $('#FormulirHapus').attr('action', '/datapembeli/' + id);
                 });
 
                 $('#FormulirHapus').on('submit', function(event) {

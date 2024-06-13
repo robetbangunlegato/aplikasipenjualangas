@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\DataBarangController;
 use App\Http\Controllers\BarangMasukController;
+use App\Http\Controllers\DataPembeliController;
 use App\Http\Controllers\BarangKeluarController;
 
 /*
@@ -36,6 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('barangkeluar', BarangKeluarController::class);
     Route::resource('databarang', DataBarangController::class);
     Route::resource('pembelian', PembelianController::class);
+    Route::resource('datapembeli', DataPembeliController::class);
 });
 
 require __DIR__.'/auth.php';

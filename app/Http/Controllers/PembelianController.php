@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\Pembeli;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -41,8 +42,9 @@ class PembelianController extends Controller
     public function show(string $id)
     {
         //
+        $pembelis = Pembeli::all();
         $barang = Barang::find($id);
-        return view('Pembelian.show')->with('barang', $barang);
+        return view('Pembelian.show')->with('barang', $barang)->with('pembelis', $pembelis);
     }
 
     /**

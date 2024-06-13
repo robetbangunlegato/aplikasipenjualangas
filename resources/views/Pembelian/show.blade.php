@@ -43,7 +43,15 @@
                                 <p class="card-text">Harga satuan {{ $barang->harga }}</p>
                                 <input placeholder="Jumlah..." class="input" name="jumlah_pesanan" type="number"
                                     id="jumlah_pesanan" max="{{ $barang->jumlah }}" min="1" autofocus>
-                                <input type="text" value="dipesan" name="status" hidden>
+                                <div class="form-group">
+                                    <label for="barang">Pilih Barang:</label>
+                                    <select class="form-control select2" id="barang" name="barang">
+                                        <option value="">Pilih barang</option>
+                                        @foreach ($pembelis as $id => $nama)
+                                            <option value="{{ $id }}">{{ $nama }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <input type="number" value="{{ $barang->id }}" name="barang_id" id=""
                                     hidden>
                                 <button class="btn btn-primary mt-3" type="submit">Buat pesanan</button>
@@ -58,21 +66,8 @@
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                document.querySelectorAll('.btn-decrement, .btn-increment').forEach(function(button) {
-                    button.addEventListener('click', function() {
-                        const input = this.parentNode.querySelector('input[type="number"]');
-                        let value = parseInt(input.value);
-
-                        if (this.classList.contains('btn-decrement')) {
-                            value = Math.max(input.min, value - 1);
-                        } else {
-                            value = Math.min(input.max, value + 1);
-                        }
-
-                        input.value = value;
-                    });
-                });
+            $(document).ready(function() {
+                $('.select2').select2();
             });
         </script>
     </main>

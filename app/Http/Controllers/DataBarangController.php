@@ -11,11 +11,22 @@ class DataBarangController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $barangs = Barang::all();
-        return view('DataBarang.index', ['barangs'=> $barangs]);
+        $query = $request->input('query'); // Ambil kata kunci pencarian
+
+
+        // Query semua data barang jika tidak ada kata kunci pencarian
+    $barangs = Barang::when($query, function ($q) use ($query) {
+        $q->where('nama', 'like', "%{$query}%");
+    })->paginate(10);
+
+        // $barangs = Barang::all();
+        return view('DataBarang.index', [
+            'barangs'=> $barangs,
+            'query' => $query
+        ]);
     }
 
     /**
