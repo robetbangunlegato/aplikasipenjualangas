@@ -47,10 +47,18 @@ class DataBarangController extends Controller
         $validasiData = $request->validate([
             'nama' => 'required|string|max:255',
             'harga' => 'required|numeric|min:0',
-            'jumlah' => 'required|integer|min:0'
+            'gas_terisi' => 'required|integer|min:0',
+            'gas_kosong' => 'required|integer|min:0'
         ]);
 
-        Barang::create($validasiData);
+
+        $barang = new Barang();
+        $barang->nama = $validasiData['nama'];
+        $barang->harga = $validasiData['harga'];
+        $barang->gas_terisi = $validasiData['gas_terisi'];
+        $barang->gas_kosong =$validasiData['gas_kosong'];
+        $barang->jumlah = $validasiData['gas_kosong'] + $validasiData['gas_terisi'];
+        $barang->save();
         return redirect()->route('databarang.index')->with('sukses', 'Data barang berhasil ditambahkan!');
     }
 
@@ -78,7 +86,6 @@ class DataBarangController extends Controller
     public function update(Request $request, string $id)
     {
         //
-        // dd($request);
         $validasiData = $request->validate([
             'nama' => 'required|string|max:255',
             'harga' => 'required|numeric|min:0',
@@ -86,23 +93,32 @@ class DataBarangController extends Controller
             'operator' => 'nullable',
             'tujuan' => 'nullable'
         ]);
+        // dd($validasiData);
 
         // cari baris mana yang akan diupdate datanya
         $barangs = Barang::findOrFail($id);
 
-        if($validasiData['operator'] == '-'){
-            if($validasiData['tujuan'] == 'gas_terisi'){
-                $barangs -> jumlah -= $validasiData['jumlah'];
-                $barangs -> gas_terisi -= $validasiData['jumlah'];
-            } elseif($validasiData['tujuan'] == 'gas_kosong')
+        if($validasiData['jumlah'] != null){
+            if($validasiData['operator'] == '-'){
+                if($validasiData['tujuan'] == 'gas_terisi'){
+                    $barangs -> jumlah -= $validasiData['jumlah'];
+                    $barangs -> gas_terisi -= $validasiData['jumlah'];
+                } elseif($validasiData['tujuan'] == 'gas_kosong'){
+                    $barangs -> jumlah -= $validasiData['jumlah'];
+                    $barangs -> gas_kosong -= $validasiData['jumlah'];
+                }
+            }elseif($validasiData['operator'] == '+'){
+                if($validasiData['tujuan'] == 'gas_terisi'){
+                    $barangs -> jumlah += $validasiData['jumlah'];
+                    $barangs -> gas_terisi += $validasiData['jumlah'];
+                } elseif($validasiData['tujuan'] == 'gas_kosong'){
+                    $barangs -> jumlah += $validasiData['jumlah'];
+                    $barangs -> gas_kosong += $validasiData['jumlah'];
+                }
+            }
         }
-
-
-        // update data nya
-        $barangs->nama = $request->input('nama');
-        $barangs->harga = $request->input('harga');
-        $barangs->jumlah = $request->input('jumlah');
-
+        $barangs->nama = $validasiData['nama'];
+        $barangs->harga = $validasiData['harga'];
         $barangs->save();
         return redirect()->route('databarang.index')->with('sukses', 'Data barang berhasil diubah!');
     }

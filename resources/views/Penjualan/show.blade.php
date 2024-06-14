@@ -44,15 +44,16 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $barang->nama }}</h5>
                                     <h6 class="card-subtitle mb-2 text-muted">Tersedia <span
-                                            class="text-danger">{{ $barang->jumlah }}</span> barang</h6>
+                                            class="text-danger">{{ $barang->gas_terisi }}</span> barang</h6>
                                     <p class="card-text">Harga satuan {{ $barang->harga }}</p>
-                                    <input placeholder="Jumlah..." class="input mb-4" name="jumlah_pesanan"
-                                        type="number" id="jumlah" max="{{ $barang->jumlah }}" min="1"
-                                        autofocus>
+                                    <input placeholder="Jumlah..." class="input mb-4" name="jumlah" type="number"
+                                        id="jumlah" max="{{ $barang->gas_terisi }}" min="1" autofocus
+                                        required>
                                     <input type="number" value="{{ $barang->id }}" name="barang_id" id=""
                                         hidden>
                                     <input type="text" value="{{ Auth::user()->id }}" name="user_id" hidden>
-                                    <select name="pembeli_id" id="pembeli" class="form-select form-control select2">
+                                    <select name="pembeli_id" id="pembeli" class="form-select form-control select2"
+                                        required>
                                         <option value="">Pilih Pembeli</option>
                                         @foreach ($pembelis as $pembeli)
                                             <option value="{{ $pembeli->id }}">{{ $pembeli->nama }} | ID :

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PenjualanController;
@@ -38,6 +39,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('databarang', DataBarangController::class);
     Route::resource('pembelian', PenjualanController::class);
     Route::resource('datapembeli', DataPembeliController::class);
+    Route::resource('laporan', LaporanController::class);
+    Route::post('/pembelian/{id}/tambahgasterisi',[PenjualanController::class, 'tambahgasterisi']);
 });
-
 require __DIR__.'/auth.php';

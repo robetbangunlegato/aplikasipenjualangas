@@ -1,8 +1,8 @@
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
-    <x-navbars.sidebar activePage='databarang.index'></x-navbars.sidebar>
+    <x-navbars.sidebar activePage='laporan.index'></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <x-navbars.navs.auth titlePage="Data Barang"></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage="Laporan"></x-navbars.navs.auth>
         <!-- End Navbar -->
 
         {{-- body --}}
@@ -20,23 +20,16 @@
             {{-- end alert --}}
             {{-- tambah barang button --}}
             <div class="row">
-                <div class="col-3">
-                    <a href="{{ route('databarang.create') }}" class="btn btn-primary">Tambah Barang
-                        <i class="material-icons opacity-50">playlist_add</i></a>
-                </div>
-                <div class="col-4 offset-4 text-end p-0">
-                    <div class="input-group input-group-outline">
-                        <label class="form-label">cari berdasarkan nama barang...</label>
-                        <input type="text" id="searchInput" class="form-control" value="{{ $query ?? '' }}">
-                    </div>
-                </div>
-                <div class="col-1 p-1 text-center">
-                    <i class="material-icons" style="font-size: 30px">search</i>
+                <div class="col-2 offset-10 text-end">
+                    <button class="btn btn-secondary" onclick="printLaporan()">Cetak
+                        <i class="material-icons opacity-50">print</i></button>
+
+
                 </div>
             </div>
             {{-- end tambah barang button --}}
-            {{-- tabel --}}
-            <div class="row">
+            {{-- table --}}
+            <div class="row" id="laporan">
                 <div class="col-12">
                     <div class="card">
                         <div class="table-responsive">
@@ -47,22 +40,23 @@
                                             No
                                         </th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Nama
+                                            ID Pembeli
                                         </th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Harga
+                                            Nama Pembeli
                                         </th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Jumlah
+                                            Jumlah pembelian
                                         </th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Gas terisi
+                                            Nama Petugas
                                         </th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Gas kosong
+                                            ID Petugas
                                         </th>
+
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Opsi
+                                            Waktu transaksi
                                         </th>
                                     </tr>
                                 </thead>
@@ -70,8 +64,10 @@
                                     @php
                                         $no = 1;
                                     @endphp
-                                    @forelse ($barangs as $barang)
+
+                                    @forelse ($transaksis as $transaksi)
                                         <tr>
+                                            {{-- @dd($transaksi->pembeli) --}}
                                             <td>
                                                 <p class="text-xs font-weight-normal mb-0">{{ $no }}</p>
                                                 @php
@@ -79,88 +75,43 @@
                                                 @endphp
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-normal mb-0">{{ $barang->nama }}</p>
+                                                <p class="text-xs font-weight-normal mb-0">
+                                                    {{ $transaksi->pembeli_id }}</p>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-normal mb-0">{{ $barang->harga }}</p>
+                                                <p class="text-xs font-weight-normal mb-0">
+                                                    {{ $transaksi->pembeli->nama }}</p>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-normal mb-0">{{ $barang->jumlah }}</p>
+                                                <p class="text-xs font-weight-normal mb-0">{{ $transaksi->jumlah }}</p>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-normal mb-0">{{ $barang->gas_terisi }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-normal mb-0">{{ $barang->gas_kosong }}
+                                                <p class="text-xs font-weight-normal mb-0">{{ $transaksi->user->name }}
                                                 </p>
                                             </td>
+                                            <td>
+                                                <p class="text-xs font-weight-normal mb-0">{{ $transaksi->user_id }}</p>
                                             </td>
 
-                                            <td class="align-middle">
-                                                <a href="{{ route('databarang.edit', $barang->id) }}"
-                                                    class="btn btn-warning">Edit
-                                                    <i class="material-icons opacity-50">draw</i></a>
-
-
-                                                <button class="btn btn-danger btn-hapus"
-                                                    data-id-barang="{{ $barang->id }}" data-bs-toggle="modal"
-                                                    data-bs-target="#HapusModal">Hapus
-                                                    <i class="material-icons opacity-50">delete</i>
-                                                </button>
+                                            <td>
+                                                <p class="text-xs font-weight-normal mb-0">{{ $transaksi->created_at }}
+                                                </p>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
                                             <td colspan="7" class="text-xs font-weight-normal">
-                                                Barang tidak ada.
+                                                Tidak ada data.
                                             </td>
                                         </tr>
                                     @endforelse
                                 </tbody>
                             </table>
-                            {{ $barangs->links() }}
                         </div>
                     </div>
                 </div>
             </div>
-            {{-- end tabel --}}
-
-            {{-- modal --}}
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="modal fade" id="HapusModal" tabindex="-1" role="dialog"
-                        aria-labelledby="modal-notification" aria-hidden="true">
-                        <div class="modal-dialog modal-danger modal-dialog-centered modal-" role="document">
-                            <div class="modal-content">
-                                <form action="" method="POST" id="FormulirHapus">
-                                    @method('DELETE')
-                                    @csrf
-                                    <div class="modal-body">
-                                        <div class="py-3 text-center">
-                                            <i class="material-icons text-secondary" style="font-size: 100px;">
-                                                report
-                                            </i>
-                                            <h4
-                                                class="text-gradient
-                                                text-danger mt-4">
-                                                Peringatan!</h4>
-                                            <p>Apakah anda yakin ingin menghapus item ini?</p>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-danger" data-bs-dismiss="modal"
-                                            type="submit">Hapus
-                                        </button>
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Batal</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {{-- end modal --}}
+            {{-- end table --}}
 
         </div>
         {{-- end body --}}
@@ -175,7 +126,7 @@
                 // mencari class button dengan nama 'btn-hapus dan menambahkan fungsi ketika tombol tersebut di klik'
                 $('.btn-hapus').click(function() {
                     let id = $(this).data('id-barang');
-                    $('#FormulirHapus').attr('action', '/databarang/' + id);
+                    $('#FormulirHapus').attr('action', '/datapembeli/' + id);
                 });
 
                 $('#FormulirHapus').on('submit', function(event) {
@@ -202,6 +153,23 @@
                         });
                 });
             });
+
+            function printLaporan() {
+                // 1. Clone konten laporan
+                var printContents = document.getElementById("laporan").cloneNode(true);
+
+                // 2. Buat jendela pop-up baru
+                var popupWin = window.open('', '_blank', 'width=1200,height=600');
+
+                // 3. Atur konten pop-up
+                popupWin.document.open();
+                popupWin.document.write('<html><head><title>Laporan</title></head><body>' + printContents.innerHTML +
+                    '</body></html>');
+                popupWin.document.close();
+
+                // 4. Cetak konten pop-up
+                popupWin.print();
+            }
         </script>
     </main>
     <x-plugins></x-plugins>

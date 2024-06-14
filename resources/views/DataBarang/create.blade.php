@@ -24,10 +24,18 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="input-group input-group-outline my-3">
-                            <label for="" class="form-label">Jumlah saat ini</label>
-                            <input type="number" class="form-control" name="jumlah" min="0">
+                            <label for="" class="form-label">Jumlah gas terisi</label>
+                            <input type="number" class="form-control" name="gas_terisi" min="0" required>
                         </div>
                     </div>
+                    <div class="col-6">
+                        <div class="input-group input-group-outline my-3">
+                            <label for="" class="form-label">Jumlah gas kosong</label>
+                            <input type="number" class="form-control" name="gas_kosong" min="0" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-6">
                         <button class="btn btn-primary my-3 col-12" type="submit">Simpan
                             <i class="material-icons">save</i>

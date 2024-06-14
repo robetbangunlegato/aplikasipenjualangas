@@ -28,7 +28,6 @@ class DashboardController extends Controller
 
         // data hasil penjualan
         $total_penjualan = number_format($total_penjualan = Transaksi::with('barang')
-        ->where('jenis_transaksi', 'keluar')
         ->get()
         ->sum(function ($transaksi) {
             return $transaksi->jumlah * $transaksi->barang->harga;

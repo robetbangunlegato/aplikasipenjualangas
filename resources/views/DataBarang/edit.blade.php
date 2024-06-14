@@ -29,7 +29,8 @@
                 <div class="row">
                     <div class="col-6">
                         <div class="input-group input-group-outline my-3 is-filled">
-                            <label for="" class="form-label">Jumlah saat ini</label>
+                            <label for="" class="form-label">Jumlah saat ini {{ $barangs->jumlah }}.
+                                Terisi : {{ $barangs->gas_terisi }}, Kosong : {{ $barangs->gas_kosong }}</label>
                             <input type="number" class="form-control" value="{{ $barangs->jumlah }}" disabled>
                         </div>
                     </div>
@@ -57,7 +58,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-6 offset-3">
                         <button class="btn btn-primary my-3 col-12" type="submit">Simpan
                             <i class="material-icons">save</i>
                         </button>
@@ -71,11 +72,12 @@
 
 
         <script>
+            const jumlahInput = document.getElementById('jumlah');
+            const dropdown1 = document.getElementById('operator');
+            const dropdown2 = document.getElementById('tujuan');
+            const operasiSelect = document.getElementById('operator');
+            const tujuanSelect = document.getElementById('tujuan');
             $(document).ready(function() {
-                const jumlahInput = document.getElementById('jumlah');
-                const dropdown1 = document.getElementById('operator');
-                const dropdown2 = document.getElementById('tujuan');
-
                 jumlahInput.addEventListener('input', function() {
                     if (this.value > 0) {
                         dropdown1.disabled = false;
@@ -87,7 +89,41 @@
                         // dropdown2.removeAttribute('required');
                     }
                 });
+            });
+            document.addEventListener('DOMContentLoaded', function() {
+                // ... (Kode untuk jumlahInput, operasiSelect, tujuanSelect tetap sama)
 
+                operasiSelect.addEventListener('change', function() {
+                    console.log(operasiSelect.value);
+
+                    if (this.value === '-') { // Jika operasi adalah pengurangan
+                        updateJumlahMax();
+                    } else {
+                        // Jika bukan pengurangan, hapus batasan max (opsional)
+                        jumlahInput.removeAttribute('max');
+                    }
+                });
+
+                tujuanSelect.addEventListener('change', function() {
+                    console.log(tujuanSelect.value);
+
+                    if (operasiSelect.value ===
+                        '-') { // Hanya update jika operasi adalah pengurangan
+                        updateJumlahMax();
+                    }
+                });
+
+                function updateJumlahMax() {
+                    if (tujuanSelect.value === 'gas_terisi') {
+                        jumlahInput.setAttribute('max', @json($barangs->gas_terisi));
+                    } else if (tujuanSelect.value === 'gas_kosong') {
+                        // Ganti dengan nilai dari kolom gas_kosong yang sesuai
+                        jumlahInput.setAttribute('max', @json($barangs->gas_kosong));
+                    } else {
+                        // Jika tidak ada tujuan yang valid, set max ke nilai default atau hapus atribut max
+                        jumlahInput.setAttribute('max', 1); // Atau jumlahInput.removeAttribute('max');
+                    }
+                }
             });
         </script>
     </main>

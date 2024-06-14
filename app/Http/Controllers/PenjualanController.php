@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Barang;
 use App\Models\Pembeli;
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,8 @@ class PenjualanController extends Controller
     public function create()
     {
         //
+        // dd($request);
+        
     }
 
     /**
@@ -34,7 +37,6 @@ class PenjualanController extends Controller
     public function store(Request $request)
     {
         //
-        
         $validasi = $request->validate([
             'jumlah' => 'required',
             'pembeli_id' => 'required',
@@ -43,9 +45,11 @@ class PenjualanController extends Controller
         ]);
 
         $barang = Barang::findOrFail($validasi['barang_id']);
-        $barang->gas_terisi -=$validasi['jumlah'];
+        $barang->gas_terisi -= $validasi['jumlah'];
         $barang->gas_kosong += $validasi['jumlah'];
-        dd($validasi);
+        $barang->save();
+        Transaksi::create($validasi);
+        return redirect()->route('pembelian.index')->with('sukses', 'Transaksi berhasil dilakukan!');
     }
 
     /**
@@ -65,6 +69,8 @@ class PenjualanController extends Controller
     public function edit(string $id)
     {
         //
+        $barangs = Barang::findOrFail($id);
+        return view('Penjualan.edit')->with('barangs', $barangs);
     }
 
     /**
@@ -73,6 +79,14 @@ class PenjualanController extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $validasi = $request->validate([
+            'jumlah' => 'required'
+        ]);
+        $barangs = Barang::findOrFail($id);
+        $barangs->gas_kosong -= $validasi['jumlah'];
+        $barangs->gas_terisi += $validasi['jumlah'];
+        $barangs->save();
+        return redirect()->route('pembelian.index')->with('sukses', 'Data berhasil diubah!');
     }
 
     /**
