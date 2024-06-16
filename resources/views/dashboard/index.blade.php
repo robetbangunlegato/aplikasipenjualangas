@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-4">
+            <div class="row justify-content-center mt-4">
                 <div class="col-lg-4 col-md-6 mt-4 mb-4">
                     <div class="card z-index-2 ">
                         {{-- diagram batang jumlah barang --}}
@@ -103,7 +103,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 mt-4 mb-4">
+                {{-- <div class="col-lg-4 col-md-6 mt-4 mb-4">
                     <div class="card z-index-2  ">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
                             <div class="bg-gradient-success shadow-success border-radius-lg py-3 pe-1">
@@ -123,8 +123,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4 mt-4 mb-3">
+                </div> --}}
+                {{-- <div class="col-lg-4 mt-4 mb-3">
                     <div class="card z-index-2 ">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2 bg-transparent">
                             <div class="bg-gradient-dark shadow-dark border-radius-lg py-3 pe-1">
@@ -143,9 +143,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
             </div>
-            <div class="row mb-4">
+            {{-- <div class="row mb-4">
                 <div class="col-lg-8 col-md-6 mb-md-0 mb-4">
                     <div class="card">
                         <div class="card-header pb-0">
@@ -165,13 +165,11 @@
                                         </a>
                                         <ul class="dropdown-menu px-2 py-3 ms-sm-n4 ms-n5"
                                             aria-labelledby="dropdownTable">
-                                            <li><a class="dropdown-item border-radius-md"
-                                                    href="javascript:;">Action</a>
+                                            <li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a>
                                             </li>
                                             <li><a class="dropdown-item border-radius-md" href="javascript:;">Another
                                                     action</a></li>
-                                            <li><a class="dropdown-item border-radius-md"
-                                                    href="javascript:;">Something
+                                            <li><a class="dropdown-item border-radius-md" href="javascript:;">Something
                                                     else here</a></li>
                                         </ul>
                                     </div>
@@ -576,8 +574,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <x-footers.auth></x-footers.auth>
+            </div> --}}
+            {{-- <x-footers.auth></x-footers.auth> --}}
         </div>
     </main>
     <x-plugins></x-plugins>

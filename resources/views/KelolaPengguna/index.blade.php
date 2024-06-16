@@ -1,8 +1,8 @@
 <x-layout bodyClass="g-sidenav-show  bg-gray-200">
-    <x-navbars.sidebar activePage='databarang.index'></x-navbars.sidebar>
+    <x-navbars.sidebar activePage='kelolapengguna.index'></x-navbars.sidebar>
     <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
         <!-- Navbar -->
-        <x-navbars.navs.auth titlePage="Data Barang"></x-navbars.navs.auth>
+        <x-navbars.navs.auth titlePage="Kelola Pengguna"></x-navbars.navs.auth>
         <!-- End Navbar -->
 
         {{-- body --}}
@@ -18,22 +18,11 @@
                 </div>
             @endif
             {{-- end alert --}}
-            {{-- tambah barang button --}}
+            {{-- tambah pengguna button --}}
             <div class="row">
                 <div class="col-3">
-                    @if (Auth::user()->role == 'admin')
-                        <a href="{{ route('databarang.create') }}" class="btn btn-primary">Tambah Barang
-                            <i class="material-icons opacity-50">playlist_add</i></a>
-                    @endif
-                </div>
-                <div class="col-4 offset-4 text-end p-0">
-                    <div class="input-group input-group-outline">
-                        <label class="form-label">cari berdasarkan nama barang...</label>
-                        <input type="text" id="searchInput" class="form-control" value="{{ $query ?? '' }}">
-                    </div>
-                </div>
-                <div class="col-1 p-1 text-center">
-                    <i class="material-icons" style="font-size: 30px">search</i>
+                    <a href="{{ route('kelolapengguna.create') }}" class="btn btn-primary">Tambah Akun
+                        <i class="material-icons opacity-50">person_add</i></a>
                 </div>
             </div>
             {{-- end tambah barang button --}}
@@ -52,30 +41,20 @@
                                             Nama
                                         </th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Harga
+                                            Email
                                         </th>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Jumlah
-                                        </th>
+                                            Role
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Gas terisi
+                                            Opsi
                                         </th>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                            Gas kosong
-                                        </th>
-                                        @if (Auth::user()->role == 'admin')
-                                            <th
-                                                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Opsi
-                                            </th>
-                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody class="text-center">
                                     @php
                                         $no = 1;
                                     @endphp
-                                    @forelse ($barangs as $barang)
+                                    @forelse ($users as $user)
                                         <tr>
                                             <td>
                                                 <p class="text-xs font-weight-normal mb-0">{{ $no }}</p>
@@ -84,49 +63,42 @@
                                                 @endphp
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-normal mb-0">{{ $barang->nama }}</p>
+                                                <p class="text-xs font-weight-normal mb-0">{{ $user->name }}</p>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-normal mb-0">{{ $barang->harga }}</p>
+                                                <p class="text-xs font-weight-normal mb-0">{{ $user->email }}</p>
                                             </td>
                                             <td>
-                                                <p class="text-xs font-weight-normal mb-0">{{ $barang->jumlah }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-normal mb-0">{{ $barang->gas_terisi }}</p>
-                                            </td>
-                                            <td>
-                                                <p class="text-xs font-weight-normal mb-0">{{ $barang->gas_kosong }}
-                                                </p>
+                                                <p class="text-xs font-weight-normal mb-0">{{ $user->role }}</p>
                                             </td>
                                             </td>
-
-                                            @if (Auth::user()->role == 'admin')
-                                                <td class="align-middle">
-                                                    <a href="{{ route('databarang.edit', $barang->id) }}"
-                                                        class="btn btn-warning">Edit
-                                                        <i class="material-icons opacity-50">draw</i></a>
-
-
+                                            <td class="align-middle">
+                                                <a href="{{ route('kelolapengguna.edit', $user->id) }}"
+                                                    class="btn btn-warning">Edit
+                                                    <i class="material-icons opacity-50">draw</i></a>
+                                                @if ($user->email === 'admin@gmail.com')
+                                                    <button class="btn btn-secondary btn-hapus" disabled>Hapus
+                                                        <i class="material-icons opacity-50">delete</i>
+                                                    </button>
+                                                @else
                                                     <button class="btn btn-danger btn-hapus"
-                                                        data-id-barang="{{ $barang->id }}" data-bs-toggle="modal"
+                                                        data-id-barang="{{ $user->id }}" data-bs-toggle="modal"
                                                         data-bs-target="#HapusModal">Hapus
                                                         <i class="material-icons opacity-50">delete</i>
                                                     </button>
-                                                </td>
-                                            @endif
+                                                @endif
 
+                                            </td>
                                         </tr>
                                     @empty
                                         <tr>
                                             <td colspan="7" class="text-xs font-weight-normal">
-                                                Barang tidak ada.
+                                                Data tidak ada.
                                             </td>
                                         </tr>
                                     @endforelse
                                 </tbody>
                             </table>
-                            {{ $barangs->links() }}
                         </div>
                     </div>
                 </div>
@@ -183,7 +155,7 @@
                 // mencari class button dengan nama 'btn-hapus dan menambahkan fungsi ketika tombol tersebut di klik'
                 $('.btn-hapus').click(function() {
                     let id = $(this).data('id-barang');
-                    $('#FormulirHapus').attr('action', '/databarang/' + id);
+                    $('#FormulirHapus').attr('action', '/kelolapengguna/' + id);
                 });
 
                 $('#FormulirHapus').on('submit', function(event) {

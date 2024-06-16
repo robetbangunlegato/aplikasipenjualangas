@@ -11,12 +11,14 @@
             <h6 class="font-weight-bolder mb-0">{{ $titlePage }}</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
-            <div class="ms-md-auto pe-md-3 d-flex align-items-center">
+            <div class="ms-md-auto pe-md-3 d-flex align-items-center" hidden>
                 <div class="input-group input-group-outline">
-                    <label class="form-label">Type here...</label>
-                    <input type="text" class="form-control">
+                    <label class="form-label" hidden>Type here...</label>
+                    <input type="text" class="form-control" hidden>
+                    <label for="" class="mt-2">Halo {{ Auth::user()->name }}</label>
                 </div>
             </div>
+
             <form method="POST" action="{{ route('logout') }}" class="d-none" id="logout-form">
                 @csrf
             </form>
@@ -29,7 +31,7 @@
                             Out</span>
                     </a>
                 </li>
-                <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+                {{-- <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                     <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
                         <div class="sidenav-toggler-inner">
                             <i class="sidenav-toggler-line"></i>
@@ -125,7 +127,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
             </ul>
         </div>
     </div>

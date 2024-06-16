@@ -75,46 +75,55 @@
                     <span class="nav-link-text ms-1">Data Barang</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link text-white {{ Str::startsWith($activePage, 'pembelian.') ? ' active bg-gradient-primary' : '' }}  "
-                    href="{{ route('pembelian.index') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">shopping_cart</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Penjualan</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white {{ Str::startsWith($activePage, 'datapembeli.') ? ' active bg-gradient-primary' : '' }}  "
-                    href="{{ route('datapembeli.index') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">group</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Data Pembeli</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white {{ Str::startsWith($activePage, 'laporan.') ? ' active bg-gradient-primary' : '' }}  "
-                    href="{{ route('laporan.index') }}">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">summarize</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Laporan</span>
-                </a>
-            </li>
-            <li class="nav-item mt-3">
+            @if (Auth::user()->role == 'non-admin')
+                <li class="nav-item">
+                    <a class="nav-link text-white {{ Str::startsWith($activePage, 'pembelian.') ? ' active bg-gradient-primary' : '' }}  "
+                        href="{{ route('pembelian.index') }}">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">shopping_cart</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Penjualan</span>
+                    </a>
+                </li>
+            @endif
+            @if (Auth::user()->role == 'admin')
+                <li class="nav-item">
+                    <a class="nav-link text-white {{ Str::startsWith($activePage, 'datapembeli.') ? ' active bg-gradient-primary' : '' }}  "
+                        href="{{ route('datapembeli.index') }}">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">group</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Data Pembeli</span>
+                    </a>
+                </li>
+            @endif
+            @if (Auth::user()->role == 'manajer')
+                <li class="nav-item">
+                    <a class="nav-link text-white {{ Str::startsWith($activePage, 'laporan.') ? ' active bg-gradient-primary' : '' }}  "
+                        href="{{ route('laporan.index') }}">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">summarize</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Laporan</span>
+                    </a>
+                </li>
+            @endif
+
+            {{-- <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white {{ $activePage == 'profile' ? ' active bg-gradient-primary' : '' }}  "
-                    href="#">
-                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                        <i class="material-icons opacity-10">person</i>
-                    </div>
-                    <span class="nav-link-text ms-1">Profile</span>
-                </a>
-            </li>
-            <li class="nav-item">
+            </li> --}}
+            @if (Auth::user()->role == 'admin')
+                <li class="nav-item">
+                    <a class="nav-link text-white {{ Str::startsWith($activePage, 'kelolapengguna.') ? ' active bg-gradient-primary' : '' }}  "
+                        href="{{ route('kelolapengguna.index') }}">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">manage_accounts</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Kelola Pengguna</span>
+                    </a>
+                </li>
+            @endif
+            {{-- <li class="nav-item">
                 <a class="nav-link text-white " href="#">
                     <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="material-icons opacity-10">login</i>
@@ -129,10 +138,10 @@
                     </div>
                     <span class="nav-link-text ms-1">Sign Up</span>
                 </a>
-            </li>
+            </li> --}}
         </ul>
     </div>
-    <div class="sidenav-footer position-absolute w-100 bottom-0 ">
+    {{-- <div class="sidenav-footer position-absolute w-100 bottom-0 ">
         <div class="mx-3">
             <a class="btn bg-gradient-primary w-100"
                 href="https://www.creative-tim.com/product/material-dashboard-laravel" target="_blank">Free Download</a>
@@ -147,5 +156,5 @@
                 type="button">Upgrade
                 to pro</a>
         </div>
-    </div>
+    </div> --}}
 </aside>

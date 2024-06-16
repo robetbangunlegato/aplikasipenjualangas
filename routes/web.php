@@ -9,6 +9,7 @@ use App\Http\Controllers\DataBarangController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\DataPembeliController;
 use App\Http\Controllers\BarangKeluarController;
+use App\Http\Controllers\KelolaPenggunaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('pembelian', PenjualanController::class);
     Route::resource('datapembeli', DataPembeliController::class);
     Route::resource('laporan', LaporanController::class);
-    Route::post('/pembelian/{id}/tambahgasterisi',[PenjualanController::class, 'tambahgasterisi']);
+    // Route::post('/pembelian/{id}/tambahgasterisi',[PenjualanController::class, 'tambahgasterisi']);
+    Route::resource('kelolapengguna', KelolaPenggunaController::class);
 });
 require __DIR__.'/auth.php';
