@@ -40,7 +40,7 @@
                         <div class="input-group input-group-outline">
                             <select name="role" id="pembeli" class="form-control" required>
                                 <option value="">Pilih Role</option>
-                                <option value="non-admin">Pembeli</option>
+                                <option value="non-admin">Penjualan</option>
                                 <option value="admin">Admin</option>
                                 <option value="manajer">Manajer</option>
                             </select>
